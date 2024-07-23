@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="creation.css">
+</head>
+<body>
+    <div class="background">
+        <div class="register-box">
+            <h2>Join Deep Truth</h2>
+            <form id="registerForm">
+                <div class="user-box">
+                    <input type="text" name="username" placeholder=" " required>
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="email" name="email" placeholder=" " required>
+                    <label>Email</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" placeholder=" " required>
+                    <label>Password</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="passcode" placeholder=" " required>
+                    <label>Passcode</label>
+                </div>
+                <button type="submit">Register</button>
+                <p>Already have an account? <a href="index.html">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const email = event.target.email.value;
+            const password = event.target.password.value;
+            const passcode = event.target.passcode.value;
+
+            try {
+                const response = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password, passcode })
+                });
+
+                const result = await response.text();
+                if (response.ok) {
+                    alert(result);
+                    window.location.href = 'index.html'; // Redirect to login page after successful registration
+                } else {
+                    alert('Error: ' + result);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to fetch data from server. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>

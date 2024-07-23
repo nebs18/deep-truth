@@ -1,1 +1,1 @@
-# deep-truth
+# deepTruth
